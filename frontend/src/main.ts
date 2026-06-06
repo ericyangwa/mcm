@@ -78,16 +78,21 @@ function timeAgo(iso: string): string {
 // ---------------------------------------------------------------------------
 
 function computeRoleScores(games: Game[]): Partial<Record<Role, RoleScore>> {
-  const buckets: Partial<Record<Role, number[]>> = {};
+  const buckets: Partial<Record<Role, { scores: number[]; wins: number }>> = {};
   for (const g of games) {
     if (!g.position || g.opScore == null) continue;
-    if (!buckets[g.position]) buckets[g.position] = [];
-    buckets[g.position]!.push(g.opScore);
+    if (!buckets[g.position]) buckets[g.position] = { scores: [], wins: 0 };
+    buckets[g.position]!.scores.push(g.opScore);
+    if (g.result === 'WIN') buckets[g.position]!.wins++;
   }
   const result: Partial<Record<Role, RoleScore>> = {};
-  for (const [role, scores] of Object.entries(buckets) as [Role, number[]][]) {
+  for (const [role, { scores, wins }] of Object.entries(buckets) as [Role, { scores: number[]; wins: number }][]) {
     const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
-    result[role] = { avgOpScore: Math.round(avg * 100) / 100, games: scores.length };
+    result[role] = {
+      avgOpScore: Math.round(avg * 100) / 100,
+      games: scores.length,
+      wins,
+    };
   }
   return result;
 }
@@ -149,7 +154,7 @@ function renderCard(player: Player, role: Role, roleScore: RoleScore): string {
         ${roleScore.avgOpScore.toFixed(2)}
         <span class="op-label">OP Score</span>
       </div>
-      <span class="sample-size">${roleScore.games} game${roleScore.games !== 1 ? 's' : ''} as ${ROLE_LABELS[role]}</span>
+      <span class="sample-size">${roleScore.games} game${roleScore.games !== 1 ? 's' : ''} as ${ROLE_LABELS[role]} · ${Math.round((roleScore.wins / roleScore.games) * 100)}% WR</span>
 
       ${rankBlock}
       ${gamesHtml}

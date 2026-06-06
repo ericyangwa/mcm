@@ -26,6 +26,7 @@ export interface Game {
 export interface RoleScore {
   avgOpScore: number;
   games: number;
+  wins: number;
 }
 
 export interface Player {
