@@ -68,7 +68,7 @@
         </a>
         <span class="lineup-score" style="color:${a}">
           ${s.score.toFixed(2)}
-          <span class="lineup-games">${s.games}g</span>
+          <span class="lineup-games">${s.games} games</span>
         </span>
       </div>`}).join("");return`
     <div class="lineup-card">

@@ -296,7 +296,7 @@ function renderLineupResult(assignments: Assignment[], totalScore: number): stri
         </a>
         <span class="lineup-score" style="color:${color}">
           ${a.score.toFixed(2)}
-          <span class="lineup-games">${a.games}g</span>
+          <span class="lineup-games">${a.games} games</span>
         </span>
       </div>`;
   }).join('');
