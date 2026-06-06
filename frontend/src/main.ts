@@ -3,6 +3,7 @@ import type { Cache, Player, Rank, Role, Game, RoleScore } from './types';
 
 // How many recent games to consider when computing scores (user-controlled)
 let gameWindow = 20;
+let activeTab: 'stats' | 'builder' = 'stats';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -72,16 +73,35 @@ function timeAgo(iso: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Render helpers
+// Score computation (client-side, respects gameWindow)
+// ---------------------------------------------------------------------------
+
+function computeRoleScores(games: Game[]): Partial<Record<Role, RoleScore>> {
+  const buckets: Partial<Record<Role, number[]>> = {};
+  for (const g of games) {
+    if (!g.position || g.opScore == null) continue;
+    if (!buckets[g.position]) buckets[g.position] = [];
+    buckets[g.position]!.push(g.opScore);
+  }
+  const result: Partial<Record<Role, RoleScore>> = {};
+  for (const [role, scores] of Object.entries(buckets) as [Role, number[]][]) {
+    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    result[role] = { avgOpScore: Math.round(avg * 100) / 100, games: scores.length };
+  }
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// Render helpers — Stats tab
 // ---------------------------------------------------------------------------
 
 function renderGameRow(game: Game): string {
   if (game.opScore == null) return '';
-  const won       = game.result === 'WIN';
-  const resultCls = game.result === 'WIN' ? 'win' : game.result === 'LOSE' ? 'loss' : '';
+  const won        = game.result === 'WIN';
+  const resultCls  = game.result === 'WIN' ? 'win' : game.result === 'LOSE' ? 'loss' : '';
   const scoreColor = opScoreColor(game.opScore);
-  const champ     = game.champion ?? '?';
-  const date      = game.createdAt
+  const champ      = game.champion ?? '?';
+  const date       = game.createdAt
     ? new Date(game.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
     : '';
 
@@ -105,7 +125,6 @@ function renderCard(player: Player, role: Role, roleScore: RoleScore): string {
        <div class="winrate">${winRate(player.rank)} WR · ${player.rank.wins}W ${player.rank.losses}L</div>`
     : `<div class="rank unranked">Unranked</div>`;
 
-  // Games for this specific role, limited to current window
   const roleGames = player.recentGames.slice(0, gameWindow).filter(g => g.position === role);
 
   const gamesHtml = roleGames.length
@@ -153,35 +172,155 @@ function renderColumn(role: Role, entries: Array<{ player: Player; score: RoleSc
 }
 
 // ---------------------------------------------------------------------------
-// Score computation (client-side, respects gameWindow)
+// Team Builder — assignment solver
 // ---------------------------------------------------------------------------
 
-function computeRoleScores(games: Game[]): Partial<Record<Role, RoleScore>> {
-  const buckets: Partial<Record<Role, number[]>> = {};
-  for (const g of games) {
-    if (!g.position || g.opScore == null) continue;
-    if (!buckets[g.position]) buckets[g.position] = [];
-    buckets[g.position]!.push(g.opScore);
+interface Assignment {
+  role: Role;
+  player: Player | null;
+  score: number | null;
+  games: number;
+}
+
+function findBestLineup(players: Player[], minGames: number): Assignment[] {
+  type Eligible = { role: Role; avgOpScore: number; games: number };
+
+  // Build eligibility per player: only roles with >= minGames games in current window
+  const eligibility: Eligible[][] = players.map(p => {
+    const scores = computeRoleScores(p.recentGames.slice(0, gameWindow));
+    return ROLES.flatMap(role => {
+      const rs = scores[role];
+      if (!rs || rs.games < minGames) return [];
+      return [{ role, avgOpScore: rs.avgOpScore, games: rs.games }];
+    });
+  });
+
+  let bestScore = -Infinity;
+  let bestMap = new Map<Role, { player: Player; score: number; games: number }>();
+
+  // Backtrack over roles, trying each eligible player (or nobody) per role
+  function solve(
+    roleIdx: number,
+    usedPlayers: Set<number>,
+    current: Map<Role, { player: Player; score: number; games: number }>,
+    currentScore: number,
+  ) {
+    if (roleIdx === ROLES.length) {
+      if (currentScore > bestScore) {
+        bestScore = currentScore;
+        bestMap = new Map(current);
+      }
+      return;
+    }
+
+    const role = ROLES[roleIdx];
+
+    // Option: leave this role unassigned
+    solve(roleIdx + 1, usedPlayers, current, currentScore);
+
+    // Option: assign an eligible, unused player
+    for (let pi = 0; pi < players.length; pi++) {
+      if (usedPlayers.has(pi)) continue;
+      const eligible = eligibility[pi].find(e => e.role === role);
+      if (!eligible) continue;
+
+      current.set(role, { player: players[pi], score: eligible.avgOpScore, games: eligible.games });
+      usedPlayers.add(pi);
+      solve(roleIdx + 1, usedPlayers, current, currentScore + eligible.avgOpScore);
+      usedPlayers.delete(pi);
+      current.delete(role);
+    }
   }
-  const result: Partial<Record<Role, RoleScore>> = {};
-  for (const [role, scores] of Object.entries(buckets) as [Role, number[]][]) {
-    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
-    result[role] = { avgOpScore: Math.round(avg * 100) / 100, games: scores.length };
-  }
-  return result;
+
+  solve(0, new Set(), new Map(), 0);
+
+  return ROLES.map(role => {
+    const a = bestMap.get(role);
+    return a
+      ? { role, player: a.player, score: a.score, games: a.games }
+      : { role, player: null, score: null, games: 0 };
+  });
 }
 
 // ---------------------------------------------------------------------------
-// Main render
+// Render — Team Builder tab
 // ---------------------------------------------------------------------------
 
-function render(cache: Cache): void {
-  // Group players by every role they have a score for, using the current window
+function renderTeamBuilder(cache: Cache): string {
+  const playerCheckboxes = cache.players.map((p, i) => `
+    <label class="tb-player-check">
+      <input type="checkbox" class="tb-player-cb" data-idx="${i}" checked />
+      <span class="tb-player-label">${p.gameName}<span class="tag">#${p.tagLine}</span></span>
+    </label>`).join('');
+
+  return `
+    <div class="tb-wrapper">
+      <div class="tb-controls">
+        <div class="tb-section-label">Players</div>
+        <div class="tb-players">${playerCheckboxes}</div>
+
+        <div class="tb-row">
+          <label class="tb-section-label" for="tb-min-games">Min games per role</label>
+          <input id="tb-min-games" type="number" class="tb-number-input" value="3" min="1" max="200" />
+        </div>
+
+        <button id="tb-solve-btn" class="tb-btn">⚡ Find Best Lineup</button>
+      </div>
+
+      <div id="tb-result" class="tb-result-area"></div>
+    </div>`;
+}
+
+function renderLineupResult(assignments: Assignment[], totalScore: number): string {
+  const filledCount = assignments.filter(a => a.player).length;
+  const avgColor    = filledCount ? opScoreColor(totalScore / filledCount) : '#888';
+
+  const rows = assignments.map(a => {
+    if (!a.player || a.score == null) {
+      return `
+        <div class="lineup-row lineup-empty">
+          <span class="lineup-role-icon">${ROLE_ICONS[a.role]}</span>
+          <span class="lineup-role-name">${ROLE_LABELS[a.role]}</span>
+          <span class="lineup-player muted">— No eligible player</span>
+          <span></span>
+        </div>`;
+    }
+    const color = opScoreColor(a.score);
+    return `
+      <div class="lineup-row">
+        <span class="lineup-role-icon">${ROLE_ICONS[a.role]}</span>
+        <span class="lineup-role-name">${ROLE_LABELS[a.role]}</span>
+        <a class="lineup-player player-name" href="${opggUrl(a.player)}" target="_blank" rel="noopener">
+          ${a.player.gameName}<span class="tag">#${a.player.tagLine}</span>
+        </a>
+        <span class="lineup-score" style="color:${color}">
+          ${a.score.toFixed(2)}
+          <span class="lineup-games">${a.games}g</span>
+        </span>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="lineup-card">
+      <div class="lineup-header">
+        Best lineup &mdash;
+        <span style="color:${avgColor}">${totalScore.toFixed(2)}</span>
+        <span class="muted"> total · ${filledCount} role${filledCount !== 1 ? 's' : ''} filled</span>
+      </div>
+      ${rows}
+    </div>`;
+}
+
+// ---------------------------------------------------------------------------
+// Top-level render
+// ---------------------------------------------------------------------------
+
+function renderStats(cache: Cache): string {
   const columns: Partial<Record<Role, Array<{ player: Player; score: RoleScore }>>> = {};
 
   for (const player of cache.players) {
     const windowedGames = player.recentGames.slice(0, gameWindow);
-    const roleScores = computeRoleScores(windowedGames);
+    const roleScores    = computeRoleScores(windowedGames);
     for (const [role, score] of Object.entries(roleScores) as [Role, RoleScore][]) {
       if (!columns[role]) columns[role] = [];
       columns[role]!.push({ player, score });
@@ -197,40 +336,84 @@ function render(cache: Cache): void {
     .map(n => `<option value="${n}" ${n === gameWindow ? 'selected' : ''}>${n} games</option>`)
     .join('');
 
+  return `
+    <div class="controls">
+      <label for="window-select">Look back</label>
+      <select id="window-select">${windowOptions}</select>
+    </div>
+    <div class="grid">
+      ${allRoles.map(role => renderColumn(role, columns[role] ?? [])).join('')}
+    </div>`;
+}
+
+function render(cache: Cache): void {
   const app = document.getElementById('app')!;
+
   app.innerHTML = `
     <header>
       <h1>MCM League Tracker</h1>
       <div class="meta">
         Updated ${timeAgo(cache.lastUpdated)} · ${cache.players.length} players tracked
       </div>
-      <div class="controls">
-        <label for="window-select">Look back</label>
-        <select id="window-select">${windowOptions}</select>
+      <div class="tabs">
+        <button class="tab-btn ${activeTab === 'stats'   ? 'active' : ''}" data-tab="stats">📊 Stats</button>
+        <button class="tab-btn ${activeTab === 'builder' ? 'active' : ''}" data-tab="builder">⚙️ Team Builder</button>
       </div>
     </header>
-    <div class="grid">
-      ${allRoles.map(role => renderColumn(role, columns[role] ?? [])).join('')}
+
+    <div id="tab-stats"   class="tab-panel ${activeTab === 'stats'   ? '' : 'hidden'}">
+      ${renderStats(cache)}
+    </div>
+    <div id="tab-builder" class="tab-panel ${activeTab === 'builder' ? '' : 'hidden'}">
+      ${renderTeamBuilder(cache)}
     </div>`;
 
-  // Wire up toggle buttons
+  // Tab switching
+  app.querySelectorAll<HTMLButtonElement>('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTab = btn.dataset.tab as 'stats' | 'builder';
+      render(cache);
+    });
+  });
+
+  // Stats: window selector
+  const select = document.getElementById('window-select') as HTMLSelectElement | null;
+  select?.addEventListener('change', () => {
+    gameWindow = parseInt(select.value, 10);
+    render(cache);
+  });
+
+  // Stats: expand/collapse game history
   app.querySelectorAll<HTMLButtonElement>('.toggle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const cardId = btn.dataset.card!;
-      const card = document.getElementById(`card-${cardId}`)!;
-      const list = card.querySelector<HTMLElement>('.games-list');
-      const icon = btn.querySelector<HTMLElement>('.toggle-icon')!;
+      const card   = document.getElementById(`card-${cardId}`)!;
+      const list   = card.querySelector<HTMLElement>('.games-list');
+      const icon   = btn.querySelector<HTMLElement>('.toggle-icon')!;
       if (!list) return;
       const open = list.classList.toggle('open');
       icon.textContent = open ? '▴' : '▾';
     });
   });
 
-  // Wire up window selector
-  const select = document.getElementById('window-select') as HTMLSelectElement | null;
-  select?.addEventListener('change', () => {
-    gameWindow = parseInt(select.value, 10);
-    render(cache);
+  // Team Builder: solve
+  document.getElementById('tb-solve-btn')?.addEventListener('click', () => {
+    const checked = [...document.querySelectorAll<HTMLInputElement>('.tb-player-cb:checked')]
+      .map(cb => parseInt(cb.dataset.idx!, 10));
+    const minGames = parseInt(
+      (document.getElementById('tb-min-games') as HTMLInputElement).value, 10,
+    ) || 1;
+
+    const selectedPlayers = checked.map(i => cache.players[i]).filter(Boolean);
+    if (selectedPlayers.length === 0) {
+      document.getElementById('tb-result')!.innerHTML =
+        '<div class="tb-msg">Select at least one player.</div>';
+      return;
+    }
+
+    const assignments  = findBestLineup(selectedPlayers, minGames);
+    const totalScore   = assignments.reduce((s, a) => s + (a.score ?? 0), 0);
+    document.getElementById('tb-result')!.innerHTML = renderLineupResult(assignments, totalScore);
   });
 }
 
@@ -242,7 +425,7 @@ async function main(): Promise<void> {
   try {
     const res = await fetch('./data/cache.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const cache: Cache = await res.json();
+    const cache = await res.json() as Cache;
     render(cache);
   } catch (err) {
     document.getElementById('app')!.innerHTML = `
