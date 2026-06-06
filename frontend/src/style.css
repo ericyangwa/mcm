@@ -353,6 +353,15 @@ header h1 {
   color: var(--text);
 }
 
+.tb-player-check:has(input:disabled) {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tb-player-check:has(input:disabled) .tb-player-label {
+  cursor: not-allowed;
+}
+
 .tb-row {
   display: flex;
   align-items: center;

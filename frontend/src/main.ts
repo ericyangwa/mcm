@@ -249,7 +249,7 @@ function findBestLineup(players: Player[], minGames: number): Assignment[] {
 function renderTeamBuilder(cache: Cache): string {
   const playerCheckboxes = cache.players.map((p, i) => `
     <label class="tb-player-check">
-      <input type="checkbox" class="tb-player-cb" data-idx="${i}" checked />
+      <input type="checkbox" class="tb-player-cb" data-idx="${i}" />
       <span class="tb-player-label">${p.gameName}<span class="tag">#${p.tagLine}</span></span>
     </label>`).join('');
 
@@ -394,6 +394,19 @@ function render(cache: Cache): void {
       const open = list.classList.toggle('open');
       icon.textContent = open ? '▴' : '▾';
     });
+  });
+
+  // Team Builder: enforce 5-player cap on checkboxes
+  function updateCheckboxCap() {
+    const allCbs = [...document.querySelectorAll<HTMLInputElement>('.tb-player-cb')];
+    const checkedCount = allCbs.filter(cb => cb.checked).length;
+    for (const cb of allCbs) {
+      if (!cb.checked) cb.disabled = checkedCount >= 5;
+    }
+  }
+
+  document.querySelectorAll<HTMLInputElement>('.tb-player-cb').forEach(cb => {
+    cb.addEventListener('change', updateCheckboxCap);
   });
 
   // Team Builder: solve
