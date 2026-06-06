@@ -66,6 +66,11 @@ header h1 {
   border-color: var(--accent);
 }
 
+.controls-divider {
+  color: var(--border);
+  user-select: none;
+}
+
 /* ---- Grid ---- */
 .grid {
   display: grid;

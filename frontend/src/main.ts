@@ -3,6 +3,7 @@ import type { Cache, Player, Rank, Role, Game, RoleScore } from './types';
 
 // How many recent games to consider when computing scores (user-controlled)
 let gameWindow = 20;
+let minRoleGames = 0; // 0 = no filter
 let activeTab: 'stats' | 'builder' = 'stats';
 
 // ---------------------------------------------------------------------------
@@ -322,6 +323,7 @@ function renderStats(cache: Cache): string {
     const windowedGames = player.recentGames.slice(0, gameWindow);
     const roleScores    = computeRoleScores(windowedGames);
     for (const [role, score] of Object.entries(roleScores) as [Role, RoleScore][]) {
+      if (minRoleGames > 0 && score.games < minRoleGames) continue;
       if (!columns[role]) columns[role] = [];
       columns[role]!.push({ player, score });
     }
@@ -336,10 +338,22 @@ function renderStats(cache: Cache): string {
     .map(n => `<option value="${n}" ${n === gameWindow ? 'selected' : ''}>${n} games</option>`)
     .join('');
 
+  const minGamesOptions = [
+    { value: 0, label: 'No filter' },
+    { value: 2, label: '2+ games' },
+    { value: 3, label: '3+ games' },
+    { value: 4, label: '4+ games' },
+    { value: 5, label: '5+ games' },
+  ].map(o => `<option value="${o.value}" ${o.value === minRoleGames ? 'selected' : ''}>${o.label}</option>`)
+   .join('');
+
   return `
     <div class="controls">
       <label for="window-select">Look back</label>
       <select id="window-select">${windowOptions}</select>
+      <span class="controls-divider">·</span>
+      <label for="min-games-select">Min games per role</label>
+      <select id="min-games-select">${minGamesOptions}</select>
     </div>
     <div class="grid">
       ${allRoles.map(role => renderColumn(role, columns[role] ?? [])).join('')}
@@ -380,6 +394,13 @@ function render(cache: Cache): void {
   const select = document.getElementById('window-select') as HTMLSelectElement | null;
   select?.addEventListener('change', () => {
     gameWindow = parseInt(select.value, 10);
+    render(cache);
+  });
+
+  // Stats: min games per role filter
+  const minGamesSelect = document.getElementById('min-games-select') as HTMLSelectElement | null;
+  minGamesSelect?.addEventListener('change', () => {
+    minRoleGames = parseInt(minGamesSelect.value, 10);
     render(cache);
   });
 
