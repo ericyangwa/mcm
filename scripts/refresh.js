@@ -240,7 +240,7 @@ async function refreshPlayer(player, existingPlayer) {
   try {
     matchData = await opggCall('lol_list_summoner_matches', {
       game_name: gameName, tag_line: tagLine, region,
-      limit: GAME_WINDOW,
+      limit: 20,
       desired_output_fields: [
         'data.game_history[].game_type',
         'data.game_history[].id',
