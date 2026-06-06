@@ -335,8 +335,19 @@ async function main() {
     }
   }
 
+  // Find the most recent game timestamp across all players
+  let lastGameAt = null;
+  for (const p of results) {
+    for (const g of p.recentGames ?? []) {
+      if (g.createdAt && (!lastGameAt || g.createdAt > lastGameAt)) {
+        lastGameAt = g.createdAt;
+      }
+    }
+  }
+
   writeFileSync(cachePath, JSON.stringify({
-    lastUpdated: new Date().toISOString(),
+    lastRefreshed: new Date().toISOString(),  // when the GHA last ran
+    lastGameAt,                               // when the most recent game was played
     players: results,
   }, null, 2));
 

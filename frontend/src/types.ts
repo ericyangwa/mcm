@@ -39,6 +39,9 @@ export interface Player {
 }
 
 export interface Cache {
-  lastUpdated: string;
+  lastRefreshed: string;
+  lastGameAt: string | null;
+  /** @deprecated use lastRefreshed */
+  lastUpdated?: string;
   players: Player[];
 }

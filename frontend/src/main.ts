@@ -367,7 +367,9 @@ function render(cache: Cache): void {
     <header>
       <h1>MCM League Tracker</h1>
       <div class="meta">
-        Updated ${timeAgo(cache.lastUpdated)} · ${cache.players.length} players tracked
+        Refreshed ${timeAgo(cache.lastRefreshed ?? cache.lastUpdated ?? '')}
+        · Last game ${cache.lastGameAt ? timeAgo(cache.lastGameAt) : 'unknown'}
+        · ${cache.players.length} players tracked
       </div>
       <div class="tabs">
         <button class="tab-btn ${activeTab === 'stats'   ? 'active' : ''}" data-tab="stats">📊 Stats</button>
