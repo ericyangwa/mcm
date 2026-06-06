@@ -1,0 +1,71 @@
+[
+  {
+    "gameName": "TheMagykal",
+    "tagLine": "NA1",
+    "puuid": "swzgrgh_2k6mIQarHcPmCE6m9N3kHba47giknsH0ZjhZ3mbNOAgbYPdGVKSTrxrE4dHmR9Rldl3lPw",
+    "region": "na1",
+    "topChampions": [
+      { "name": "Anivia", "role": "mid" },
+      { "name": "Lissandra", "role": "mid" }
+    ]
+  },
+  {
+    "gameName": "illiterit",
+    "tagLine": "lose",
+    "puuid": "DWpPr3Hy7gSB5_r-B6MNMqop84BBFfdB-MD62JKwiDl2C9F4R8zHj2ukh4Zvyfl7JSTofPpVaE7zuw",
+    "region": "na1",
+    "topChampions": [
+      { "name": "Kha'Zix", "role": "jungle" },
+      { "name": "Ornn", "role": "jungle" }
+    ]
+  },
+  {
+    "gameName": "比登特",
+    "tagLine": "1738",
+    "puuid": "956hl-ljZzWQfT8KnXrQKwevZndXYRJckFUBSfgZWsU_yBEUAKuLOKs5rQVdHkQGZL3YOR_NQDan5A",
+    "region": "na1",
+    "topChampions": []
+  },
+  {
+    "gameName": "T1 Gumayusi",
+    "tagLine": "4934",
+    "puuid": "k_lvF59jb7_6Zp-ZHTFXgKGFI5j5EMhWRRz7v7H6MRbta5znfDn0qoH6QF55PdDBw2RFw0kuorLXBw",
+    "region": "na1",
+    "topChampions": []
+  },
+  {
+    "gameName": "HotshotGG",
+    "tagLine": "1696",
+    "puuid": "qTYlVmJbUjPTt4dBNbjqYJd4X2cfCjm0rkQQl8JmM2SAxNLHAxqhvmL9QwaZUTnmJy4U4IbzAMaYqQ",
+    "region": "na1",
+    "topChampions": []
+  },
+  {
+    "gameName": "sem",
+    "tagLine": "twice",
+    "puuid": "j6nxsm0bzLK2oFnO_-sd0esxvFWHiVSKg3HzOcDJtTqWBQ2qXlZymZZh9YOH6stR43qophT46YZnoA",
+    "region": "na1",
+    "topChampions": []
+  },
+  {
+    "gameName": "Ms Taylor Swift",
+    "tagLine": "EESTI",
+    "puuid": "CbOK5CNDq95dO5Wdjjw9bVjAUY0YcdveO4hSC1BaHKfX3a5ZG0XVILCVPwePlbPbteNpoqDAOVzKtQ",
+    "region": "na1",
+    "topChampions": []
+  },
+  {
+    "gameName": "Wonked",
+    "tagLine": "1181",
+    "puuid": "9vsAq3AsE7xQoxK5edRkuqYpHBUKdRkEY5SzSVNJsZvX2iw2Kr3_anU5cVWGdUlfMcC3PGDyQjt3TQ",
+    "region": "na1",
+    "topChampions": []
+  },
+  {
+    "gameName": "Bart",
+    "tagLine": "NA3",
+    "puuid": "CRhn4qqvI3aP5rVweb51C07i83A54ddwMCXBQu8hxaTCR9IxCkfA2cSmGPeBrBjeK8tVuMd6LAb9fA",
+    "region": "na1",
+    "topChampions": []
+  }
+]

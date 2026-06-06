@@ -1,0 +1,37 @@
+name: Refresh Data
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # every 15 minutes
+  workflow_dispatch:          # allow manual trigger from GitHub UI
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to commit cache.json back to the repo
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Refresh data + build
+        run: npm run build
+
+      - name: Commit updated cache
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/cache.json frontend/public/data/cache.json
+          git diff --cached --quiet && echo "No changes to commit" || git commit -m "chore: refresh player data [skip ci]"
+          git push
