@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   root: 'frontend',
-  base: '/mcm/',
+  base: command === 'build' ? '/mcm/' : '/',
   build: {
     outDir: '../docs',
     emptyOutDir: true,
   },
-});
+}));
