@@ -338,14 +338,9 @@ function renderStats(cache: Cache): string {
     .map(n => `<option value="${n}" ${n === gameWindow ? 'selected' : ''}>${n} games</option>`)
     .join('');
 
-  const minGamesOptions = [
-    { value: 0, label: 'No filter' },
-    { value: 2, label: '2+ games' },
-    { value: 3, label: '3+ games' },
-    { value: 4, label: '4+ games' },
-    { value: 5, label: '5+ games' },
-  ].map(o => `<option value="${o.value}" ${o.value === minRoleGames ? 'selected' : ''}>${o.label}</option>`)
-   .join('');
+  const minGamesOptions = [0, 1, 2, 3, 4, 5]
+    .map(n => `<option value="${n}" ${n === minRoleGames ? 'selected' : ''}>${n}</option>`)
+    .join('');
 
   return `
     <div class="controls">
