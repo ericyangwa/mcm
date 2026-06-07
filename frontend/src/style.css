@@ -452,6 +452,34 @@ header h1 {
 .lineup-games  { font-size: 0.7rem; font-weight: 400; color: var(--text-muted); margin-left: 4px; }
 .muted         { color: var(--text-muted); }
 
+/* ---- Trends tab ---- */
+.trends-wrapper {
+  max-width: 900px;
+}
+
+.trends-chart-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+}
+
+.controls-select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.controls-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
 /* ---- Loading / Error ---- */
 #loading, .error {
   text-align: center;

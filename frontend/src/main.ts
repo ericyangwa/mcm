@@ -1,10 +1,15 @@
 import './style.css';
 import type { Cache, Player, Rank, Role, Game, RoleScore } from './types';
+import { Chart, LineController, LineElement, PointElement, LinearScale, TimeScale, Tooltip, Legend } from 'chart.js';
+import 'chartjs-adapter-date-fns';
+
+Chart.register(LineController, LineElement, PointElement, LinearScale, TimeScale, Tooltip, Legend);
 
 // How many recent games to consider when computing scores (user-controlled)
 let gameWindow = 20;
 let minRoleGames = 0; // 0 = no filter
-let activeTab: 'stats' | 'builder' = 'stats';
+let activeTab: 'stats' | 'builder' | 'trends' = 'stats';
+let trendsChart: Chart | null = null;
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -318,6 +323,150 @@ function renderLineupResult(assignments: Assignment[], totalScore: number): stri
 }
 
 // ---------------------------------------------------------------------------
+// Trends tab
+// ---------------------------------------------------------------------------
+
+const CHART_COLORS = [
+  '#c89b3c', '#4a9eff', '#00c080', '#e84057', '#9d4dc6',
+  '#f4c874', '#00b4b4', '#e5a330', '#576bce', '#6a7f9a',
+];
+
+function rollingAvg(values: number[], window: number): number[] {
+  return values.map((_, i) => {
+    const slice = values.slice(Math.max(0, i - window + 1), i + 1);
+    return slice.reduce((a, b) => a + b, 0) / slice.length;
+  });
+}
+
+function renderTrends(cache: Cache): string {
+  const playerCheckboxes = cache.players.map((p, i) => `
+    <label class="tb-player-check">
+      <input type="checkbox" class="trends-player-cb" data-idx="${i}" />
+      <span class="tb-player-label">${p.gameName}<span class="tag">#${p.tagLine}</span></span>
+    </label>`).join('');
+
+  const roleOptions = ['all', ...ROLES]
+    .map(r => `<option value="${r}">${r === 'all' ? 'All roles' : ROLE_LABELS[r as Role]}</option>`)
+    .join('');
+
+  return `
+    <div class="tb-wrapper trends-wrapper">
+      <div class="tb-controls">
+        <div class="tb-section-label">Players</div>
+        <div class="tb-players">${playerCheckboxes}</div>
+        <div class="tb-row">
+          <label class="tb-section-label" for="trends-role">Role</label>
+          <select id="trends-role" class="controls-select">${roleOptions}</select>
+          <label class="tb-section-label" for="trends-smooth" style="margin-left:12px">Smoothing</label>
+          <select id="trends-smooth" class="controls-select">
+            <option value="1">None</option>
+            <option value="3" selected>3-game avg</option>
+            <option value="5">5-game avg</option>
+            <option value="10">10-game avg</option>
+          </select>
+        </div>
+      </div>
+      <div class="trends-chart-wrap">
+        <canvas id="trends-canvas"></canvas>
+        <div id="trends-empty" class="empty" style="display:none">Select players above to see their trend.</div>
+      </div>
+    </div>`;
+}
+
+function updateTrendsChart(cache: Cache) {
+  const checkedIdxs = [...document.querySelectorAll<HTMLInputElement>('.trends-player-cb:checked')]
+    .map(cb => parseInt(cb.dataset.idx!, 10));
+  const roleFilter = (document.getElementById('trends-role') as HTMLSelectElement)?.value ?? 'all';
+  const smoothing  = parseInt((document.getElementById('trends-smooth') as HTMLSelectElement)?.value ?? '3', 10);
+
+  const canvas  = document.getElementById('trends-canvas') as HTMLCanvasElement | null;
+  const emptyEl = document.getElementById('trends-empty') as HTMLElement | null;
+  if (!canvas) return;
+
+  if (trendsChart) { trendsChart.destroy(); trendsChart = null; }
+
+  if (checkedIdxs.length === 0) {
+    canvas.style.display = 'none';
+    if (emptyEl) emptyEl.style.display = 'block';
+    return;
+  }
+
+  canvas.style.display = 'block';
+  if (emptyEl) emptyEl.style.display = 'none';
+
+  const datasets = checkedIdxs.map((pi, ci) => {
+    const player = cache.players[pi];
+    const games  = [...player.recentGames]
+      .filter(g => g.opScore != null && (roleFilter === 'all' || g.position === roleFilter))
+      .reverse(); // oldest first
+
+    // Aggregate: one point per calendar day (average of all games that day)
+    const byDay = new Map<string, number[]>();
+    for (const g of games) {
+      const day = new Date(g.createdAt).toISOString().slice(0, 10);
+      if (!byDay.has(day)) byDay.set(day, []);
+      byDay.get(day)!.push(g.opScore as number);
+    }
+    const dailyPoints = [...byDay.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([day, scores]) => ({
+        x: new Date(day).getTime(),
+        y: scores.reduce((a, b) => a + b, 0) / scores.length,
+      }));
+
+    const smoothed = rollingAvg(dailyPoints.map(p => p.y), smoothing);
+
+    return {
+      label: `${player.gameName}#${player.tagLine}`,
+      data: dailyPoints.map((p, i) => ({ x: p.x, y: Math.round(smoothed[i] * 100) / 100 })),
+      borderColor: CHART_COLORS[ci % CHART_COLORS.length],
+      backgroundColor: 'transparent',
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      borderWidth: 2,
+      tension: 0.3,
+    };
+  });
+
+  trendsChart = new Chart(canvas, {
+    type: 'line',
+    data: { datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        x: {
+          type: 'time',
+          time: { unit: 'day', tooltipFormat: 'MMM d' },
+          grid: { color: '#30363d' },
+          ticks: { color: '#8b949e' },
+        },
+        y: {
+          min: 0,
+          max: 10,
+          grid: { color: '#30363d' },
+          ticks: { color: '#8b949e' },
+          title: { display: true, text: 'OP Score', color: '#8b949e' },
+        },
+      },
+      plugins: {
+        legend: {
+          labels: { color: '#e6edf3', boxWidth: 12, padding: 16 },
+        },
+        tooltip: {
+          backgroundColor: '#161b22',
+          borderColor: '#30363d',
+          borderWidth: 1,
+          titleColor: '#e6edf3',
+          bodyColor: '#8b949e',
+        },
+      },
+    },
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Top-level render
 // ---------------------------------------------------------------------------
 
@@ -374,6 +523,7 @@ function render(cache: Cache): void {
       <div class="tabs">
         <button class="tab-btn ${activeTab === 'stats'   ? 'active' : ''}" data-tab="stats">📊 Stats</button>
         <button class="tab-btn ${activeTab === 'builder' ? 'active' : ''}" data-tab="builder">⚙️ Team Builder</button>
+        <button class="tab-btn ${activeTab === 'trends'  ? 'active' : ''}" data-tab="trends">📈 Trends</button>
       </div>
     </header>
 
@@ -382,15 +532,27 @@ function render(cache: Cache): void {
     </div>
     <div id="tab-builder" class="tab-panel ${activeTab === 'builder' ? '' : 'hidden'}">
       ${renderTeamBuilder(cache)}
+    </div>
+    <div id="tab-trends" class="tab-panel ${activeTab === 'trends' ? '' : 'hidden'}">
+      ${renderTrends(cache)}
     </div>`;
 
   // Tab switching
   app.querySelectorAll<HTMLButtonElement>('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      activeTab = btn.dataset.tab as 'stats' | 'builder';
+      activeTab = btn.dataset.tab as 'stats' | 'builder' | 'trends';
       render(cache);
     });
   });
+
+  // Trends: player checkboxes + controls
+  if (activeTab === 'trends') {
+    document.querySelectorAll<HTMLInputElement>('.trends-player-cb').forEach(cb => {
+      cb.addEventListener('change', () => updateTrendsChart(cache));
+    });
+    document.getElementById('trends-role')?.addEventListener('change', () => updateTrendsChart(cache));
+    document.getElementById('trends-smooth')?.addEventListener('change', () => updateTrendsChart(cache));
+  }
 
   // Stats: window selector
   const select = document.getElementById('window-select') as HTMLSelectElement | null;
