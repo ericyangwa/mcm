@@ -225,8 +225,16 @@ async function refreshPlayer(player, existingPlayer) {
   const cachedGames      = existingPlayer?.recentGames ?? [];
   const cachedUpdatedAt  = existingPlayer?.profileUpdatedAt ?? null;
 
-  if (profileUpdatedAt && profileUpdatedAt === cachedUpdatedAt && cachedGames.length > 0) {
-    console.log('  Profile unchanged since last run — reusing cached games.');
+  // Skip match fetch only if profile hasn't updated AND we have games cached already.
+  // Note: OP.GG can lag on updating profileUpdatedAt, so we always fetch if cache is fresh
+  // enough to be suspicious. Only skip if we have games AND the last cached game is recent
+  // (within 15 min), meaning we probably just ran.
+  const lastCachedGameAt = cachedGames[0]?.createdAt ?? null;
+  const cacheIsVeryFresh = lastCachedGameAt &&
+    (Date.now() - new Date(lastCachedGameAt).getTime()) < 15 * 60 * 1000;
+
+  if (profileUpdatedAt && profileUpdatedAt === cachedUpdatedAt && cachedGames.length > 0 && cacheIsVeryFresh) {
+    console.log('  Profile unchanged and cache is fresh — reusing cached games.');
     return {
       gameName, tagLine, region: player.region,
       rank, profileUpdatedAt, topChampions,
@@ -331,9 +339,10 @@ async function main() {
       const existing = existingByName.get(`${player.gameName}#${player.tagLine}`) ?? null;
       const result   = await refreshPlayer(player, existing);
       if (result) {
-        // Detect if this player has more games than before
-        const prevCount = existing?.recentGames?.length ?? 0;
-        if (result.recentGames.length > prevCount) anyNewGames = true;
+        // Detect new games by comparing the most recent game ID
+        const prevNewest = existing?.recentGames?.[0]?.id ?? null;
+        const newNewest  = result.recentGames?.[0]?.id ?? null;
+        if (newNewest && newNewest !== prevNewest) anyNewGames = true;
         results.push(result);
       }
     } catch (err) {
