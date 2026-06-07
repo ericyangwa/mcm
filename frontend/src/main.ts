@@ -491,6 +491,7 @@ function renderStats(cache: Cache): string {
     .filter(n => n <= maxGames || n === 20)
     .map(n => `<option value="${n}" ${n === gameWindow ? 'selected' : ''}>${n} games</option>`)
     .join('');
+  const allOption = `<option value="${maxGames}" ${gameWindow === maxGames ? 'selected' : ''}>All (${maxGames})</option>`;
 
   const minGamesOptions = [0, 1, 2, 3, 4, 5]
     .map(n => `<option value="${n}" ${n === minRoleGames ? 'selected' : ''}>${n}</option>`)
@@ -499,7 +500,7 @@ function renderStats(cache: Cache): string {
   return `
     <div class="controls">
       <label for="window-select">Look back</label>
-      <select id="window-select">${windowOptions}</select>
+      <select id="window-select">${windowOptions}${allOption}</select>
       <span class="controls-divider">·</span>
       <label for="min-games-select">Min games per role</label>
       <select id="min-games-select">${minGamesOptions}</select>
