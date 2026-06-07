@@ -324,19 +324,31 @@ async function main() {
     (existingCache.players ?? []).map(p => [`${p.gameName}#${p.tagLine}`, p])
   );
 
+  let anyNewGames = false;
   const results = [];
   for (const player of players) {
     try {
       const existing = existingByName.get(`${player.gameName}#${player.tagLine}`) ?? null;
       const result   = await refreshPlayer(player, existing);
-      if (result) results.push(result);
+      if (result) {
+        // Detect if this player has more games than before
+        const prevCount = existing?.recentGames?.length ?? 0;
+        if (result.recentGames.length > prevCount) anyNewGames = true;
+        results.push(result);
+      }
     } catch (err) {
       console.error(`  Error processing ${player.gameName}#${player.tagLine}:`, err.message);
     }
   }
 
+  if (!anyNewGames && existingCache.players?.length > 0) {
+    console.log('\nNo new games found for any player — skipping cache write.');
+    console.log(`Total OP.GG API calls: ${callCount}`);
+    return;
+  }
+
   // Find the most recent game timestamp across all players
-  let lastGameAt = null;
+  let lastGameAt = existingCache.lastGameAt ?? null;
   for (const p of results) {
     for (const g of p.recentGames ?? []) {
       if (g.createdAt && (!lastGameAt || g.createdAt > lastGameAt)) {
@@ -346,8 +358,8 @@ async function main() {
   }
 
   writeFileSync(cachePath, JSON.stringify({
-    lastRefreshed: new Date().toISOString(),  // when the GHA last ran
-    lastGameAt,                               // when the most recent game was played
+    lastRefreshed: new Date().toISOString(),
+    lastGameAt,
     players: results,
   }, null, 2));
 
