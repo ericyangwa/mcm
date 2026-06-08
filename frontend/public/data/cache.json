@@ -1,6 +1,6 @@
 {
-  "lastRefreshed": "2026-06-07T06:34:32.344Z",
-  "lastGameAt": "2026-06-07T15:08:03+09:00",
+  "lastRefreshed": "2026-06-08T01:35:24.909Z",
+  "lastGameAt": "2026-06-08T10:33:55+09:00",
   "players": [
     {
       "gameName": "TheMagykal",
@@ -13,7 +13,7 @@
         "wins": 43,
         "losses": 45
       },
-      "profileUpdatedAt": "2026-06-07T15:33:11+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:15+09:00",
       "topChampions": [
         {
           "name": "Anivia",
@@ -247,7 +247,7 @@
         "wins": 45,
         "losses": 47
       },
-      "profileUpdatedAt": "2026-06-07T15:33:14+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:16+09:00",
       "topChampions": [
         {
           "name": "Kha'Zix",
@@ -385,7 +385,7 @@
         "wins": 56,
         "losses": 54
       },
-      "profileUpdatedAt": "2026-06-07T15:33:16+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:15+09:00",
       "topChampions": [
         {
           "name": "Sett",
@@ -414,6 +414,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKr1XeEiYkS2TaEKyC1qbyCb7hG54DmK-G0=",
+          "createdAt": "2026-06-08T10:33:55+09:00",
+          "opScore": 4.14,
+          "result": "LOSE",
+          "position": "mid",
+          "champion": "Lux"
+        },
         {
           "id": "4-Edu6ZdgKrHaNkS1Hjjh98UC3z0LCKPGVT7s83K-x8=",
           "createdAt": "2026-06-05T12:44:21+09:00",
@@ -587,7 +595,7 @@
         "wins": 46,
         "losses": 35
       },
-      "profileUpdatedAt": "2026-06-07T15:33:15+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:15+09:00",
       "topChampions": [
         {
           "name": "Ezreal",
@@ -606,7 +614,7 @@
         },
         {
           "name": "Caitlyn",
-          "play": 5,
+          "play": 6,
           "win": 4
         },
         {
@@ -616,6 +624,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKr1XeEiYkS2TaEKyC1qbyCb7hG54DmK-G0=",
+          "createdAt": "2026-06-08T10:33:55+09:00",
+          "opScore": 4.06,
+          "result": "LOSE",
+          "position": "bot",
+          "champion": "Miss Fortune"
+        },
         {
           "id": "4-Edu6ZdgKri3U8L2VbZL6hEHY_aCSrE28DR9yZOItQ=",
           "createdAt": "2026-06-07T15:08:03+09:00",
@@ -773,7 +789,7 @@
         "wins": 23,
         "losses": 24
       },
-      "profileUpdatedAt": "2026-06-07T15:33:16+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:16+09:00",
       "topChampions": [
         {
           "name": "Nidalee",
@@ -863,7 +879,7 @@
         "wins": 46,
         "losses": 44
       },
-      "profileUpdatedAt": "2026-06-07T15:33:16+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:16+09:00",
       "topChampions": [
         {
           "name": "Braum",
@@ -892,6 +908,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKr1XeEiYkS2TaEKyC1qbyCb7hG54DmK-G0=",
+          "createdAt": "2026-06-08T10:33:55+09:00",
+          "opScore": 3.68,
+          "result": "LOSE",
+          "position": "support",
+          "champion": "Thresh"
+        },
         {
           "id": "4-Edu6ZdgKri3U8L2VbZL6hEHY_aCSrE28DR9yZOItQ=",
           "createdAt": "2026-06-07T15:08:03+09:00",
@@ -1057,7 +1081,7 @@
         "wins": 40,
         "losses": 38
       },
-      "profileUpdatedAt": "2026-06-07T15:33:16+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:16+09:00",
       "topChampions": [
         {
           "name": "Nocturne",
@@ -1086,6 +1110,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKr1XeEiYkS2TaEKyC1qbyCb7hG54DmK-G0=",
+          "createdAt": "2026-06-08T10:33:55+09:00",
+          "opScore": 5.86,
+          "result": "LOSE",
+          "position": "top",
+          "champion": "Swain"
+        },
         {
           "id": "4-Edu6ZdgKri3U8L2VbZL6hEHY_aCSrE28DR9yZOItQ=",
           "createdAt": "2026-06-07T15:08:03+09:00",
@@ -1243,7 +1275,7 @@
         "wins": 36,
         "losses": 39
       },
-      "profileUpdatedAt": "2026-06-07T15:33:16+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:16+09:00",
       "topChampions": [
         {
           "name": "Smolder",
@@ -1367,7 +1399,7 @@
       "tagLine": "NA3",
       "region": "na1",
       "rank": null,
-      "profileUpdatedAt": "2026-06-07T15:33:16+09:00",
+      "profileUpdatedAt": "2026-06-08T08:12:17+09:00",
       "topChampions": [
         {
           "name": "Ahri",
