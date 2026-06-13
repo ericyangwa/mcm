@@ -1,6 +1,6 @@
 {
-  "lastRefreshed": "2026-06-10T10:34:42.605Z",
-  "lastGameAt": "2026-06-10T15:05:53+09:00",
+  "lastRefreshed": "2026-06-13T04:24:36.464Z",
+  "lastGameAt": "2026-06-13T13:04:09+09:00",
   "players": [
     {
       "gameName": "TheMagykal",
@@ -13,7 +13,7 @@
         "wins": 45,
         "losses": 48
       },
-      "profileUpdatedAt": "2026-06-10T15:07:43+09:00",
+      "profileUpdatedAt": "2026-06-13T08:55:38+09:00",
       "topChampions": [
         {
           "name": "Anivia",
@@ -287,7 +287,7 @@
         "wins": 50,
         "losses": 54
       },
-      "profileUpdatedAt": "2026-06-10T15:07:46+09:00",
+      "profileUpdatedAt": "2026-06-13T08:55:40+09:00",
       "topChampions": [
         {
           "name": "Kha'Zix",
@@ -316,6 +316,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKo6FnXIEmO9KzBlE63TUaGfExAC3DK75ac=",
+          "createdAt": "2026-06-13T13:04:09+09:00",
+          "opScore": 5.82,
+          "result": "LOSE",
+          "position": "jungle",
+          "champion": "Shen"
+        },
         {
           "id": "4-Edu6ZdgKqIm4keAOqhQnRyvekEkCHe0utjbsLWBAk=",
           "createdAt": "2026-06-10T15:05:53+09:00",
@@ -513,7 +521,7 @@
         "wins": 60,
         "losses": 61
       },
-      "profileUpdatedAt": "2026-06-10T15:07:46+09:00",
+      "profileUpdatedAt": "2026-06-13T08:55:42+09:00",
       "topChampions": [
         {
           "name": "Sett",
@@ -803,7 +811,7 @@
         "wins": 51,
         "losses": 41
       },
-      "profileUpdatedAt": "2026-06-10T15:07:47+09:00",
+      "profileUpdatedAt": "2026-06-13T11:08:57+09:00",
       "topChampions": [
         {
           "name": "Ezreal",
@@ -832,6 +840,22 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKo6FnXIEmO9KzBlE63TUaGfExAC3DK75ac=",
+          "createdAt": "2026-06-13T13:04:09+09:00",
+          "opScore": 5.35,
+          "result": "LOSE",
+          "position": "bot",
+          "champion": "Jinx"
+        },
+        {
+          "id": "4-Edu6ZdgKoJjrss4ePnWBvi8BcIwTUdZRfwAyE2GQQ=",
+          "createdAt": "2026-06-13T11:05:51+09:00",
+          "opScore": 1.29,
+          "result": "LOSE",
+          "position": "bot",
+          "champion": "Kai'Sa"
+        },
         {
           "id": "4-Edu6ZdgKp9xuByycLjeZa0k5EbVmoXTaoZzSXujnI=",
           "createdAt": "2026-06-10T13:23:46+09:00",
@@ -1077,7 +1101,7 @@
         "wins": 23,
         "losses": 24
       },
-      "profileUpdatedAt": "2026-06-10T15:07:49+09:00",
+      "profileUpdatedAt": "2026-06-13T08:55:45+09:00",
       "topChampions": [
         {
           "name": "Nidalee",
@@ -1167,7 +1191,7 @@
         "wins": 52,
         "losses": 50
       },
-      "profileUpdatedAt": "2026-06-10T15:11:40+09:00",
+      "profileUpdatedAt": "2026-06-13T08:55:46+09:00",
       "topChampions": [
         {
           "name": "Braum",
@@ -1196,6 +1220,38 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKo6FnXIEmO9KzBlE63TUaGfExAC3DK75ac=",
+          "createdAt": "2026-06-13T13:04:09+09:00",
+          "opScore": 5.4,
+          "result": "LOSE",
+          "position": "support",
+          "champion": "Leona"
+        },
+        {
+          "id": "4-Edu6ZdgKoPTz7vMRLdu65Oa8aonsb78-1-O7KXmp4=",
+          "createdAt": "2026-06-13T12:18:39+09:00",
+          "opScore": 9.45,
+          "result": "WIN",
+          "position": "support",
+          "champion": "Seraphine"
+        },
+        {
+          "id": "4-Edu6ZdgKrT9AFT4n4kUsdHsEQ44Jq0A02-PUFGJG8=",
+          "createdAt": "2026-06-13T11:38:35+09:00",
+          "opScore": 4.96,
+          "result": "LOSE",
+          "position": "support",
+          "champion": "Neeko"
+        },
+        {
+          "id": "4-Edu6ZdgKoJjrss4ePnWBvi8BcIwTUdZRfwAyE2GQQ=",
+          "createdAt": "2026-06-13T11:05:51+09:00",
+          "opScore": 1.66,
+          "result": "LOSE",
+          "position": "support",
+          "champion": "Karma"
+        },
         {
           "id": "4-Edu6ZdgKqIm4keAOqhQnRyvekEkCHe0utjbsLWBAk=",
           "createdAt": "2026-06-10T15:05:53+09:00",
@@ -1457,7 +1513,7 @@
         "wins": 46,
         "losses": 46
       },
-      "profileUpdatedAt": "2026-06-10T15:07:52+09:00",
+      "profileUpdatedAt": "2026-06-13T11:08:52+09:00",
       "topChampions": [
         {
           "name": "Nocturne",
@@ -1486,6 +1542,38 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKo6FnXIEmO9KzBlE63TUaGfExAC3DK75ac=",
+          "createdAt": "2026-06-13T13:04:09+09:00",
+          "opScore": 2.35,
+          "result": "LOSE",
+          "position": "top",
+          "champion": "Malphite"
+        },
+        {
+          "id": "4-Edu6ZdgKoPTz7vMRLdu65Oa8aonsb78-1-O7KXmp4=",
+          "createdAt": "2026-06-13T12:18:39+09:00",
+          "opScore": 7.55,
+          "result": "WIN",
+          "position": "jungle",
+          "champion": "Nocturne"
+        },
+        {
+          "id": "4-Edu6ZdgKrT9AFT4n4kUsdHsEQ44Jq0A02-PUFGJG8=",
+          "createdAt": "2026-06-13T11:38:35+09:00",
+          "opScore": 3.06,
+          "result": "LOSE",
+          "position": "jungle",
+          "champion": "Master Yi"
+        },
+        {
+          "id": "4-Edu6ZdgKoJjrss4ePnWBvi8BcIwTUdZRfwAyE2GQQ=",
+          "createdAt": "2026-06-13T11:05:51+09:00",
+          "opScore": 1.84,
+          "result": "LOSE",
+          "position": "jungle",
+          "champion": "Nocturne"
+        },
         {
           "id": "4-Edu6ZdgKqIm4keAOqhQnRyvekEkCHe0utjbsLWBAk=",
           "createdAt": "2026-06-10T15:05:53+09:00",
@@ -1755,7 +1843,7 @@
         "wins": 38,
         "losses": 42
       },
-      "profileUpdatedAt": "2026-06-10T15:07:53+09:00",
+      "profileUpdatedAt": "2026-06-13T08:55:50+09:00",
       "topChampions": [
         {
           "name": "Smolder",
@@ -1919,7 +2007,7 @@
       "tagLine": "NA3",
       "region": "na1",
       "rank": null,
-      "profileUpdatedAt": "2026-06-10T15:07:55+09:00",
+      "profileUpdatedAt": "2026-06-13T08:55:51+09:00",
       "topChampions": [
         {
           "name": "Ahri",
