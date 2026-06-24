@@ -1,5 +1,5 @@
 {
-  "lastRefreshed": "2026-06-24T08:15:06.297Z",
+  "lastRefreshed": "2026-06-24T11:21:08.974Z",
   "lastGameAt": "2026-06-24T16:28:39+09:00",
   "players": [
     {
@@ -8,12 +8,12 @@
       "region": "na1",
       "rank": {
         "tier": "EMERALD",
-        "division": 4,
-        "lp": 98,
-        "wins": 52,
-        "losses": 56
+        "division": 3,
+        "lp": 40,
+        "wins": 55,
+        "losses": 57
       },
-      "profileUpdatedAt": "2026-06-24T13:38:03+09:00",
+      "profileUpdatedAt": "2026-06-24T17:14:53+09:00",
       "topChampions": [
         {
           "name": "Anivia",
@@ -36,12 +36,20 @@
           "win": 4
         },
         {
-          "name": "Lissandra",
+          "name": "Ezreal",
           "play": 7,
           "win": 5
         }
       ],
       "recentGames": [
+        {
+          "id": "4-Edu6ZdgKotpNQKsu4MBO_L_G6nSZh4q7eiHoU5yj0=",
+          "createdAt": "2026-06-24T16:28:39+09:00",
+          "opScore": 5.69,
+          "result": "LOSE",
+          "position": "bot",
+          "champion": "Caitlyn"
+        },
         {
           "id": "4-Edu6ZdgKqhmwK2s5f6thzDl0qAo6jjjQdjc2-zoW8=",
           "createdAt": "2026-06-24T15:39:55+09:00",
@@ -426,17 +434,17 @@
       "region": "na1",
       "rank": {
         "tier": "BRONZE",
-        "division": 2,
-        "lp": 75,
-        "wins": 57,
-        "losses": 63
+        "division": 1,
+        "lp": 15,
+        "wins": 60,
+        "losses": 64
       },
-      "profileUpdatedAt": "2026-06-24T13:38:08+09:00",
+      "profileUpdatedAt": "2026-06-24T17:14:53+09:00",
       "topChampions": [
         {
           "name": "Kha'Zix",
-          "play": 31,
-          "win": 18
+          "play": 32,
+          "win": 19
         },
         {
           "name": "Zed",
@@ -445,7 +453,7 @@
         },
         {
           "name": "Shaco",
-          "play": 16,
+          "play": 17,
           "win": 5
         },
         {
@@ -813,11 +821,11 @@
       "rank": {
         "tier": "PLATINUM",
         "division": 3,
-        "lp": 2,
-        "wins": 66,
-        "losses": 69
+        "lp": 41,
+        "wins": 69,
+        "losses": 70
       },
-      "profileUpdatedAt": "2026-06-24T13:38:13+09:00",
+      "profileUpdatedAt": "2026-06-24T17:14:55+09:00",
       "topChampions": [
         {
           "name": "Galio",
@@ -830,14 +838,14 @@
           "win": 2
         },
         {
-          "name": "Sion",
+          "name": "Sylas",
           "play": 6,
           "win": 4
         },
         {
-          "name": "Sylas",
-          "play": 5,
-          "win": 3
+          "name": "Sion",
+          "play": 6,
+          "win": 4
         },
         {
           "name": "Viego",
@@ -1251,7 +1259,7 @@
         "wins": 55,
         "losses": 45
       },
-      "profileUpdatedAt": "2026-06-24T13:38:16+09:00",
+      "profileUpdatedAt": "2026-06-24T17:14:56+09:00",
       "topChampions": [
         {
           "name": "Ezreal",
@@ -1573,7 +1581,7 @@
         "wins": 23,
         "losses": 24
       },
-      "profileUpdatedAt": "2026-06-24T13:38:20+09:00",
+      "profileUpdatedAt": "2026-06-24T17:14:58+09:00",
       "topChampions": [
         {
           "name": "Nidalee",
@@ -1659,11 +1667,11 @@
       "rank": {
         "tier": "PLATINUM",
         "division": 3,
-        "lp": 47,
+        "lp": 28,
         "wins": 62,
-        "losses": 59
+        "losses": 60
       },
-      "profileUpdatedAt": "2026-06-24T15:42:30+09:00",
+      "profileUpdatedAt": "2026-06-24T17:15:00+09:00",
       "topChampions": [
         {
           "name": "Braum",
@@ -1686,9 +1694,9 @@
           "win": 5
         },
         {
-          "name": "Rakan",
-          "play": 7,
-          "win": 6
+          "name": "Blitzcrank",
+          "play": 8,
+          "win": 4
         }
       ],
       "recentGames": [
@@ -2113,7 +2121,7 @@
         "wins": 48,
         "losses": 49
       },
-      "profileUpdatedAt": "2026-06-24T13:38:28+09:00",
+      "profileUpdatedAt": "2026-06-24T17:15:01+09:00",
       "topChampions": [
         {
           "name": "Nocturne",
@@ -2445,13 +2453,13 @@
       "tagLine": "1181",
       "region": "na1",
       "rank": {
-        "tier": "PLATINUM",
-        "division": 1,
-        "lp": 48,
-        "wins": 42,
-        "losses": 49
+        "tier": "EMERALD",
+        "division": 4,
+        "lp": 0,
+        "wins": 45,
+        "losses": 50
       },
-      "profileUpdatedAt": "2026-06-24T13:38:32+09:00",
+      "profileUpdatedAt": "2026-06-24T17:15:04+09:00",
       "topChampions": [
         {
           "name": "Smolder",
@@ -2460,13 +2468,13 @@
         },
         {
           "name": "Sion",
-          "play": 9,
-          "win": 3
+          "play": 10,
+          "win": 4
         },
         {
           "name": "Jhin",
-          "play": 8,
-          "win": 3
+          "play": 9,
+          "win": 4
         },
         {
           "name": "Jax",
@@ -2735,7 +2743,7 @@
       "tagLine": "NA3",
       "region": "na1",
       "rank": null,
-      "profileUpdatedAt": "2026-06-24T13:38:36+09:00",
+      "profileUpdatedAt": "2026-06-24T17:15:05+09:00",
       "topChampions": [
         {
           "name": "Ahri",
