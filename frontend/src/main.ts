@@ -8,7 +8,8 @@ Chart.register(LineController, LineElement, PointElement, LinearScale, TimeScale
 // How many recent games to consider when computing scores (user-controlled)
 let gameWindow = 20;
 let minRoleGames = 0; // 0 = no filter
-let activeTab: 'stats' | 'builder' | 'trends' = 'stats';
+let minDuoGames = 2;
+let activeTab: 'stats' | 'builder' | 'trends' | 'botlane' = 'stats';
 let trendsChart: Chart | null = null;
 
 // ---------------------------------------------------------------------------
@@ -100,6 +101,151 @@ function computeRoleScores(games: Game[]): Partial<Record<Role, RoleScore>> {
     };
   }
   return result;
+}
+
+// ---------------------------------------------------------------------------
+// Bot Lane synergy
+// ---------------------------------------------------------------------------
+
+interface DuoGame {
+  gameId: string;
+  date: string;
+  win: boolean;
+  botChamp: string | null;
+  botScore: number;
+  supChamp: string | null;
+  supScore: number;
+}
+
+interface BotLanePair {
+  bot: Player;
+  support: Player;
+  games: DuoGame[];
+  avgCombinedScore: number;
+  wins: number;
+}
+
+function computeBotLanePairs(players: Player[]): BotLanePair[] {
+  // Map game id → { player, game } entries
+  const byGame = new Map<string, Array<{ player: Player; game: Game }>>();
+  for (const p of players) {
+    for (const g of p.recentGames) {
+      if (!byGame.has(g.id)) byGame.set(g.id, []);
+      byGame.get(g.id)!.push({ player: p, game: g });
+    }
+  }
+
+  // Collect per-pair games
+  const pairMap = new Map<string, BotLanePair>();
+
+  for (const entries of byGame.values()) {
+    const bots = entries.filter(e => e.game.position === 'bot'     && e.game.opScore != null);
+    const sups = entries.filter(e => e.game.position === 'support' && e.game.opScore != null);
+    for (const b of bots) {
+      for (const s of sups) {
+        if (b.player === s.player) continue;
+        const key = [b.player.gameName, b.player.tagLine, s.player.gameName, s.player.tagLine].join('|');
+        if (!pairMap.has(key)) {
+          pairMap.set(key, { bot: b.player, support: s.player, games: [], avgCombinedScore: 0, wins: 0 });
+        }
+        const pair = pairMap.get(key)!;
+        pair.games.push({
+          gameId:   b.game.id,
+          date:     b.game.createdAt,
+          win:      b.game.result === 'WIN',
+          botChamp: b.game.champion,
+          botScore: b.game.opScore as number,
+          supChamp: s.game.champion,
+          supScore: s.game.opScore as number,
+        });
+      }
+    }
+  }
+
+  // Compute aggregates and sort newest-first within each pair
+  const pairs = [...pairMap.values()];
+  for (const pair of pairs) {
+    pair.games.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    pair.wins = pair.games.filter(g => g.win).length;
+    const total = pair.games.reduce((s, g) => s + g.botScore + g.supScore, 0);
+    pair.avgCombinedScore = Math.round((total / pair.games.length) * 100) / 100;
+  }
+
+  // Sort by avg combined score descending
+  return pairs.sort((a, b) => b.avgCombinedScore - a.avgCombinedScore);
+}
+
+function renderDuoGameRow(g: DuoGame): string {
+  const resultCls  = g.win ? 'win' : 'loss';
+  const botColor   = opScoreColor(g.botScore);
+  const supColor   = opScoreColor(g.supScore);
+  const date       = new Date(g.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  return `
+    <div class="game-row duo-game-row ${resultCls}">
+      <span class="game-result-dot" title="${g.win ? 'WIN' : 'LOSE'}">${g.win ? '▲' : '▼'}</span>
+      <span class="duo-side">🏹 <span class="game-champion">${g.botChamp ?? '?'}</span> <span class="game-score" style="color:${botColor}">${g.botScore.toFixed(2)}</span></span>
+      <span class="duo-side">💙 <span class="game-champion">${g.supChamp ?? '?'}</span> <span class="game-score" style="color:${supColor}">${g.supScore.toFixed(2)}</span></span>
+      <span class="game-date">${date}</span>
+    </div>`;
+}
+
+function renderDuoCard(pair: BotLanePair): string {
+  const wr      = Math.round((pair.wins / pair.games.length) * 100);
+  const scoreColor = opScoreColor(pair.avgCombinedScore / 2);
+  const cardId  = `duo-${pair.bot.gameName}-${pair.bot.tagLine}-${pair.support.gameName}-${pair.support.tagLine}`
+    .replace(/[^a-zA-Z0-9-]/g, '_');
+
+  const gamesHtml = `<div class="games-list" id="games-${cardId}">${pair.games.map(renderDuoGameRow).join('')}</div>`;
+
+  return `
+    <div class="card duo-card" id="card-${cardId}">
+      <div class="card-header">
+        <div class="duo-names">
+          <span class="duo-role-badge">🏹</span>
+          <a class="player-name" href="${opggUrl(pair.bot)}" target="_blank" rel="noopener">
+            ${pair.bot.gameName}<span class="tag">#${pair.bot.tagLine}</span>
+          </a>
+          <span class="duo-amp">&amp;</span>
+          <span class="duo-role-badge">💙</span>
+          <a class="player-name" href="${opggUrl(pair.support)}" target="_blank" rel="noopener">
+            ${pair.support.gameName}<span class="tag">#${pair.support.tagLine}</span>
+          </a>
+        </div>
+        <button class="toggle-btn duo-toggle" data-card="${cardId}" title="Show games">
+          <span class="toggle-icon">▾</span>
+        </button>
+      </div>
+
+      <div class="duo-stats">
+        <div class="op-score" style="color:${scoreColor}">
+          ${pair.avgCombinedScore.toFixed(2)}
+          <span class="op-label">Avg Combined</span>
+        </div>
+        <span class="sample-size">${pair.games.length} game${pair.games.length !== 1 ? 's' : ''} together · ${wr}% WR</span>
+      </div>
+
+      ${gamesHtml}
+    </div>`;
+}
+
+function renderBotLane(cache: Cache): string {
+  const allPairs = computeBotLanePairs(cache.players);
+  const pairs = allPairs.filter(p => p.games.length >= minDuoGames);
+
+  const listHtml = pairs.length
+    ? pairs.map(renderDuoCard).join('')
+    : `<div class="empty">No duos with ${minDuoGames}+ games together. Lower the minimum or play more games!</div>`;
+
+  return `
+    <div class="botlane-wrapper">
+      <div class="botlane-controls">
+        <label class="tb-section-label" for="duo-min-games">Min games together</label>
+        <input id="duo-min-games" type="number" class="tb-number-input" value="${minDuoGames}" min="1" max="200" />
+      </div>
+      <div class="botlane-list" id="botlane-list">
+        ${listHtml}
+      </div>
+    </div>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -198,7 +344,7 @@ function findBestLineup(players: Player[], minGames: number): Assignment[] {
 
   // Build eligibility per player: only roles with >= minGames games in current window
   const eligibility: Eligible[][] = players.map(p => {
-    const scores = computeRoleScores(p.recentGames.slice(0, gameWindow));
+    const scores = computeRoleScores(p.recentGames);
     return ROLES.flatMap(role => {
       const rs = scores[role];
       if (!rs || rs.games < minGames) return [];
@@ -525,6 +671,7 @@ function render(cache: Cache): void {
         <button class="tab-btn ${activeTab === 'stats'   ? 'active' : ''}" data-tab="stats">📊 Stats</button>
         <button class="tab-btn ${activeTab === 'builder' ? 'active' : ''}" data-tab="builder">⚙️ Team Builder</button>
         <button class="tab-btn ${activeTab === 'trends'  ? 'active' : ''}" data-tab="trends">📈 Trends</button>
+        <button class="tab-btn ${activeTab === 'botlane' ? 'active' : ''}" data-tab="botlane">🤝 Bot Lane</button>
       </div>
     </header>
 
@@ -536,12 +683,15 @@ function render(cache: Cache): void {
     </div>
     <div id="tab-trends" class="tab-panel ${activeTab === 'trends' ? '' : 'hidden'}">
       ${renderTrends(cache)}
+    </div>
+    <div id="tab-botlane" class="tab-panel ${activeTab === 'botlane' ? '' : 'hidden'}">
+      ${renderBotLane(cache)}
     </div>`;
 
   // Tab switching
   app.querySelectorAll<HTMLButtonElement>('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      activeTab = btn.dataset.tab as 'stats' | 'builder' | 'trends';
+      activeTab = btn.dataset.tab as 'stats' | 'builder' | 'trends' | 'botlane';
       render(cache);
     });
   });
@@ -569,7 +719,7 @@ function render(cache: Cache): void {
     render(cache);
   });
 
-  // Stats: expand/collapse game history
+  // Stats + Bot Lane: expand/collapse game history
   app.querySelectorAll<HTMLButtonElement>('.toggle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const cardId = btn.dataset.card!;
@@ -613,6 +763,12 @@ function render(cache: Cache): void {
     const assignments  = findBestLineup(selectedPlayers, minGames);
     const totalScore   = assignments.reduce((s, a) => s + (a.score ?? 0), 0);
     document.getElementById('tb-result')!.innerHTML = renderLineupResult(assignments, totalScore);
+  });
+
+  // Bot Lane: min games filter
+  document.getElementById('duo-min-games')?.addEventListener('change', (e) => {
+    minDuoGames = parseInt((e.target as HTMLInputElement).value, 10) || 1;
+    render(cache);
   });
 }
 
