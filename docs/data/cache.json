@@ -1,6 +1,6 @@
 {
-  "lastRefreshed": "2026-07-28T06:15:50.989Z",
-  "lastGameAt": "2026-07-28T14:13:38+09:00",
+  "lastRefreshed": "2026-07-29T07:33:18.768Z",
+  "lastGameAt": "2026-07-29T16:14:28+09:00",
   "players": [
     {
       "gameName": "TheMagykal",
@@ -9,11 +9,11 @@
       "rank": {
         "tier": "EMERALD",
         "division": 2,
-        "lp": 22,
-        "wins": 88,
+        "lp": 43,
+        "wins": 89,
         "losses": 87
       },
-      "profileUpdatedAt": "2026-07-28T13:42:31+09:00",
+      "profileUpdatedAt": "2026-07-29T14:31:21+09:00",
       "topChampions": [
         {
           "name": "Anivia",
@@ -42,6 +42,38 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgVYQyj0gFva_S_CcFKRwVqbWnKzd0AT_bQ=",
+          "createdAt": "2026-07-29T16:14:28+09:00",
+          "opScore": 9.53,
+          "result": "WIN",
+          "position": "mid",
+          "champion": "Xerath"
+        },
+        {
+          "id": "eq3KyFixtgU1Jv8Kck8qGDmIuI-HMJ1h5z3MuCe6Mb8=",
+          "createdAt": "2026-07-29T15:36:02+09:00",
+          "opScore": 5.55,
+          "result": "WIN",
+          "position": "mid",
+          "champion": "Kassadin"
+        },
+        {
+          "id": "eq3KyFixtgWTC5VyAsexhOTIu6HmtaKtisCREvTDzh0=",
+          "createdAt": "2026-07-29T14:52:46+09:00",
+          "opScore": 5.77,
+          "result": "WIN",
+          "position": "bot",
+          "champion": "Xerath"
+        },
+        {
+          "id": "eq3KyFixtgVHHInWPg9IE1qbG58I2fKezI9o7oCBsbI=",
+          "createdAt": "2026-07-29T14:19:06+09:00",
+          "opScore": 4.11,
+          "result": "LOSE",
+          "position": "bot",
+          "champion": "Caitlyn"
+        },
         {
           "id": "eq3KyFixtgWqi1IbNtNV7jwWf5npE9pFdKtAuI9jA4c=",
           "createdAt": "2026-07-28T14:13:38+09:00",
@@ -946,12 +978,12 @@
       "region": "na1",
       "rank": {
         "tier": "BRONZE",
-        "division": 2,
-        "lp": 72,
-        "wins": 94,
+        "division": 1,
+        "lp": 31,
+        "wins": 97,
         "losses": 99
       },
-      "profileUpdatedAt": "2026-07-28T12:40:38+09:00",
+      "profileUpdatedAt": "2026-07-29T13:33:48+09:00",
       "topChampions": [
         {
           "name": "Kha'Zix",
@@ -960,8 +992,8 @@
         },
         {
           "name": "Yorick",
-          "play": 35,
-          "win": 19
+          "play": 37,
+          "win": 21
         },
         {
           "name": "Zed",
@@ -980,6 +1012,38 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgVYQyj0gFva_S_CcFKRwVqbWnKzd0AT_bQ=",
+          "createdAt": "2026-07-29T16:14:28+09:00",
+          "opScore": 3.83,
+          "result": "WIN",
+          "position": "top",
+          "champion": "Yorick"
+        },
+        {
+          "id": "eq3KyFixtgU1Jv8Kck8qGDmIuI-HMJ1h5z3MuCe6Mb8=",
+          "createdAt": "2026-07-29T15:36:02+09:00",
+          "opScore": 4.83,
+          "result": "WIN",
+          "position": "top",
+          "champion": "Poppy"
+        },
+        {
+          "id": "eq3KyFixtgWTC5VyAsexhOTIu6HmtaKtisCREvTDzh0=",
+          "createdAt": "2026-07-29T14:52:46+09:00",
+          "opScore": 7.48,
+          "result": "WIN",
+          "position": "top",
+          "champion": "Shen"
+        },
+        {
+          "id": "eq3KyFixtgVHHInWPg9IE1qbG58I2fKezI9o7oCBsbI=",
+          "createdAt": "2026-07-29T14:19:06+09:00",
+          "opScore": 1.37,
+          "result": "LOSE",
+          "position": "top",
+          "champion": "Yorick"
+        },
         {
           "id": "eq3KyFixtgWqi1IbNtNV7jwWf5npE9pFdKtAuI9jA4c=",
           "createdAt": "2026-07-28T14:13:38+09:00",
@@ -1907,13 +1971,13 @@
       "tagLine": "1738",
       "region": "na1",
       "rank": {
-        "tier": "PLATINUM",
-        "division": 1,
-        "lp": 36,
-        "wins": 106,
+        "tier": "EMERALD",
+        "division": 4,
+        "lp": 1,
+        "wins": 109,
         "losses": 101
       },
-      "profileUpdatedAt": "2026-07-28T12:40:47+09:00",
+      "profileUpdatedAt": "2026-07-29T13:33:57+09:00",
       "topChampions": [
         {
           "name": "Galio",
@@ -1921,14 +1985,14 @@
           "win": 5
         },
         {
-          "name": "Ryze",
+          "name": "Sylas",
           "play": 9,
           "win": 6
         },
         {
-          "name": "Sylas",
-          "play": 8,
-          "win": 5
+          "name": "Ryze",
+          "play": 9,
+          "win": 6
         },
         {
           "name": "Sion",
@@ -1942,6 +2006,38 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgVYQyj0gFva_S_CcFKRwVqbWnKzd0AT_bQ=",
+          "createdAt": "2026-07-29T16:14:28+09:00",
+          "opScore": 7.48,
+          "result": "WIN",
+          "position": "jungle",
+          "champion": "Akshan"
+        },
+        {
+          "id": "eq3KyFixtgU1Jv8Kck8qGDmIuI-HMJ1h5z3MuCe6Mb8=",
+          "createdAt": "2026-07-29T15:36:02+09:00",
+          "opScore": 7.85,
+          "result": "WIN",
+          "position": "jungle",
+          "champion": "Rammus"
+        },
+        {
+          "id": "eq3KyFixtgWTC5VyAsexhOTIu6HmtaKtisCREvTDzh0=",
+          "createdAt": "2026-07-29T14:52:46+09:00",
+          "opScore": 10,
+          "result": "WIN",
+          "position": "jungle",
+          "champion": "Viego"
+        },
+        {
+          "id": "eq3KyFixtgVHHInWPg9IE1qbG58I2fKezI9o7oCBsbI=",
+          "createdAt": "2026-07-29T14:19:06+09:00",
+          "opScore": 5.68,
+          "result": "LOSE",
+          "position": "jungle",
+          "champion": "Zac"
+        },
         {
           "id": "eq3KyFixtgWqi1IbNtNV7jwWf5npE9pFdKtAuI9jA4c=",
           "createdAt": "2026-07-28T14:13:38+09:00",
@@ -2910,17 +3006,17 @@
       "region": "na1",
       "rank": {
         "tier": "DIAMOND",
-        "division": 4,
-        "lp": 79,
-        "wins": 63,
+        "division": 3,
+        "lp": 37,
+        "wins": 66,
         "losses": 61
       },
-      "profileUpdatedAt": "2026-07-28T12:40:56+09:00",
+      "profileUpdatedAt": "2026-07-29T13:34:05+09:00",
       "topChampions": [
         {
           "name": "Ezreal",
-          "play": 35,
-          "win": 15
+          "play": 36,
+          "win": 16
         },
         {
           "name": "Lucian",
@@ -2929,8 +3025,8 @@
         },
         {
           "name": "Kai'Sa",
-          "play": 27,
-          "win": 18
+          "play": 28,
+          "win": 19
         },
         {
           "name": "Ziggs",
@@ -3453,7 +3549,7 @@
         "wins": 23,
         "losses": 24
       },
-      "profileUpdatedAt": "2026-07-28T12:41:03+09:00",
+      "profileUpdatedAt": "2026-07-29T13:34:13+09:00",
       "topChampions": [
         {
           "name": "Nidalee",
@@ -3539,15 +3635,15 @@
       "rank": {
         "tier": "PLATINUM",
         "division": 3,
-        "lp": 43,
-        "wins": 104,
-        "losses": 102
+        "lp": 81,
+        "wins": 107,
+        "losses": 103
       },
-      "profileUpdatedAt": "2026-07-28T14:17:04+09:00",
+      "profileUpdatedAt": "2026-07-29T16:17:01+09:00",
       "topChampions": [
         {
           "name": "Karma",
-          "play": 27,
+          "play": 28,
           "win": 12
         },
         {
@@ -3566,12 +3662,44 @@
           "win": 10
         },
         {
-          "name": "Blitzcrank",
-          "play": 11,
+          "name": "Seraphine",
+          "play": 13,
           "win": 7
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgVYQyj0gFva_S_CcFKRwVqbWnKzd0AT_bQ=",
+          "createdAt": "2026-07-29T16:14:28+09:00",
+          "opScore": 9.09,
+          "result": "WIN",
+          "position": "support",
+          "champion": "Rell"
+        },
+        {
+          "id": "eq3KyFixtgU1Jv8Kck8qGDmIuI-HMJ1h5z3MuCe6Mb8=",
+          "createdAt": "2026-07-29T15:36:02+09:00",
+          "opScore": 5.17,
+          "result": "WIN",
+          "position": "support",
+          "champion": "Brand"
+        },
+        {
+          "id": "eq3KyFixtgWTC5VyAsexhOTIu6HmtaKtisCREvTDzh0=",
+          "createdAt": "2026-07-29T14:52:46+09:00",
+          "opScore": 7.91,
+          "result": "WIN",
+          "position": "support",
+          "champion": "Seraphine"
+        },
+        {
+          "id": "eq3KyFixtgVHHInWPg9IE1qbG58I2fKezI9o7oCBsbI=",
+          "createdAt": "2026-07-29T14:19:06+09:00",
+          "opScore": 3.72,
+          "result": "LOSE",
+          "position": "support",
+          "champion": "Karma"
+        },
         {
           "id": "eq3KyFixtgWqi1IbNtNV7jwWf5npE9pFdKtAuI9jA4c=",
           "createdAt": "2026-07-28T14:13:38+09:00",
@@ -4665,7 +4793,7 @@
         "wins": 69,
         "losses": 71
       },
-      "profileUpdatedAt": "2026-07-28T12:41:21+09:00",
+      "profileUpdatedAt": "2026-07-29T13:34:29+09:00",
       "topChampions": [
         {
           "name": "Nocturne",
@@ -5347,7 +5475,7 @@
         "wins": 70,
         "losses": 69
       },
-      "profileUpdatedAt": "2026-07-28T12:41:29+09:00",
+      "profileUpdatedAt": "2026-07-29T14:54:52+09:00",
       "topChampions": [
         {
           "name": "Jhin",
@@ -5376,6 +5504,38 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgVYQyj0gFva_S_CcFKRwVqbWnKzd0AT_bQ=",
+          "createdAt": "2026-07-29T16:14:28+09:00",
+          "opScore": 7.26,
+          "result": "WIN",
+          "position": "bot",
+          "champion": "Nidalee"
+        },
+        {
+          "id": "eq3KyFixtgU1Jv8Kck8qGDmIuI-HMJ1h5z3MuCe6Mb8=",
+          "createdAt": "2026-07-29T15:36:02+09:00",
+          "opScore": 7.27,
+          "result": "WIN",
+          "position": "bot",
+          "champion": "Senna"
+        },
+        {
+          "id": "eq3KyFixtgWTC5VyAsexhOTIu6HmtaKtisCREvTDzh0=",
+          "createdAt": "2026-07-29T14:52:46+09:00",
+          "opScore": 9.8,
+          "result": "WIN",
+          "position": "mid",
+          "champion": "Lux"
+        },
+        {
+          "id": "eq3KyFixtgVHHInWPg9IE1qbG58I2fKezI9o7oCBsbI=",
+          "createdAt": "2026-07-29T14:19:06+09:00",
+          "opScore": 6.41,
+          "result": "LOSE",
+          "position": "mid",
+          "champion": "Jhin"
+        },
         {
           "id": "eq3KyFixtgUV_QRx5ZzE6NsLCbzoVKJdfMui7BDBmGQ=",
           "createdAt": "2026-07-21T15:11:03+09:00",
@@ -5983,7 +6143,7 @@
       "tagLine": "NA3",
       "region": "na1",
       "rank": null,
-      "profileUpdatedAt": "2026-07-28T12:41:37+09:00",
+      "profileUpdatedAt": "2026-07-29T13:34:48+09:00",
       "topChampions": [
         {
           "name": "Ahri",
