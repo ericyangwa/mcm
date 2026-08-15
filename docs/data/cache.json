@@ -1,6 +1,6 @@
 {
-  "lastRefreshed": "2026-08-14T08:51:40.036Z",
-  "lastGameAt": "2026-08-14T16:47:23+09:00",
+  "lastRefreshed": "2026-08-15T06:59:27.134Z",
+  "lastGameAt": "2026-08-15T15:51:21+09:00",
   "players": [
     {
       "gameName": "TheMagykal",
@@ -9,16 +9,16 @@
       "rank": {
         "tier": "EMERALD",
         "division": 1,
-        "lp": 6,
-        "wins": 108,
+        "lp": 26,
+        "wins": 109,
         "losses": 106
       },
-      "profileUpdatedAt": "2026-08-14T16:44:05+09:00",
+      "profileUpdatedAt": "2026-08-15T15:58:14+09:00",
       "topChampions": [
         {
           "name": "Anivia",
-          "play": 44,
-          "win": 24
+          "play": 45,
+          "win": 25
         },
         {
           "name": "Ezreal",
@@ -42,6 +42,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgUED26ORUCiczT-XjWhhs8OdoF-AyuCLFE=",
+          "createdAt": "2026-08-15T15:51:21+09:00",
+          "opScore": 5.74,
+          "result": "WIN",
+          "position": "mid",
+          "champion": "Lissandra"
+        },
         {
           "id": "eq3KyFixtgUyvKUgExxuZa5jKruXz0HuG0-IeOwqCQg=",
           "createdAt": "2026-08-14T16:47:23+09:00",
@@ -1259,11 +1267,11 @@
       "rank": {
         "tier": "BRONZE",
         "division": 1,
-        "lp": 26,
-        "wins": 111,
+        "lp": 46,
+        "wins": 112,
         "losses": 113
       },
-      "profileUpdatedAt": "2026-08-14T16:44:12+09:00",
+      "profileUpdatedAt": "2026-08-15T15:02:19+09:00",
       "topChampions": [
         {
           "name": "Yorick",
@@ -2457,7 +2465,7 @@
         "wins": 131,
         "losses": 126
       },
-      "profileUpdatedAt": "2026-08-14T16:49:05+09:00",
+      "profileUpdatedAt": "2026-08-15T15:02:27+09:00",
       "topChampions": [
         {
           "name": "Sylas",
@@ -2486,6 +2494,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgUED26ORUCiczT-XjWhhs8OdoF-AyuCLFE=",
+          "createdAt": "2026-08-15T15:51:21+09:00",
+          "opScore": 7.28,
+          "result": "WIN",
+          "position": "jungle",
+          "champion": "Vi"
+        },
         {
           "id": "eq3KyFixtgUyvKUgExxuZa5jKruXz0HuG0-IeOwqCQg=",
           "createdAt": "2026-08-14T16:47:23+09:00",
@@ -3835,11 +3851,11 @@
         "wins": 73,
         "losses": 70
       },
-      "profileUpdatedAt": "2026-08-14T16:44:30+09:00",
+      "profileUpdatedAt": "2026-08-15T15:02:35+09:00",
       "topChampions": [
         {
           "name": "Ezreal",
-          "play": 38,
+          "play": 39,
           "win": 16
         },
         {
@@ -3864,6 +3880,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgUED26ORUCiczT-XjWhhs8OdoF-AyuCLFE=",
+          "createdAt": "2026-08-15T15:51:21+09:00",
+          "opScore": 8.82,
+          "result": "WIN",
+          "position": "bot",
+          "champion": "Yunara"
+        },
         {
           "id": "eq3KyFixtgWmxErsT1HM16G-PxlQv6J7IcuqgMxbS-I=",
           "createdAt": "2026-08-13T14:50:17+09:00",
@@ -4501,7 +4525,7 @@
         "wins": 23,
         "losses": 24
       },
-      "profileUpdatedAt": "2026-08-14T16:44:37+09:00",
+      "profileUpdatedAt": "2026-08-15T15:02:44+09:00",
       "topChampions": [
         {
           "name": "Nidalee",
@@ -4587,11 +4611,11 @@
       "rank": {
         "tier": "GOLD",
         "division": 1,
-        "lp": 25,
-        "wins": 124,
+        "lp": 43,
+        "wins": 125,
         "losses": 127
       },
-      "profileUpdatedAt": "2026-08-14T16:44:44+09:00",
+      "profileUpdatedAt": "2026-08-15T15:02:50+09:00",
       "topChampions": [
         {
           "name": "Karma",
@@ -4609,17 +4633,25 @@
           "win": 10
         },
         {
+          "name": "Nautilus",
+          "play": 17,
+          "win": 12
+        },
+        {
           "name": "Seraphine",
           "play": 17,
           "win": 8
-        },
-        {
-          "name": "Nautilus",
-          "play": 16,
-          "win": 11
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgUED26ORUCiczT-XjWhhs8OdoF-AyuCLFE=",
+          "createdAt": "2026-08-15T15:51:21+09:00",
+          "opScore": 8.09,
+          "result": "WIN",
+          "position": "support",
+          "champion": "Milio"
+        },
         {
           "id": "eq3KyFixtgUyvKUgExxuZa5jKruXz0HuG0-IeOwqCQg=",
           "createdAt": "2026-08-14T16:47:23+09:00",
@@ -6081,7 +6113,7 @@
         "wins": 71,
         "losses": 75
       },
-      "profileUpdatedAt": "2026-08-14T16:44:55+09:00",
+      "profileUpdatedAt": "2026-08-15T15:02:58+09:00",
       "topChampions": [
         {
           "name": "Nocturne",
@@ -6806,12 +6838,12 @@
       "region": "na1",
       "rank": {
         "tier": "EMERALD",
-        "division": 4,
-        "lp": 90,
-        "wins": 88,
+        "division": 3,
+        "lp": 9,
+        "wins": 89,
         "losses": 89
       },
-      "profileUpdatedAt": "2026-08-14T16:45:03+09:00",
+      "profileUpdatedAt": "2026-08-15T15:03:06+09:00",
       "topChampions": [
         {
           "name": "Jhin",
@@ -6830,8 +6862,8 @@
         },
         {
           "name": "Smolder",
-          "play": 10,
-          "win": 6
+          "play": 11,
+          "win": 7
         },
         {
           "name": "Jax",
@@ -6840,6 +6872,14 @@
         }
       ],
       "recentGames": [
+        {
+          "id": "eq3KyFixtgUED26ORUCiczT-XjWhhs8OdoF-AyuCLFE=",
+          "createdAt": "2026-08-15T15:51:21+09:00",
+          "opScore": 3.42,
+          "result": "WIN",
+          "position": "top",
+          "champion": "Cho'Gath"
+        },
         {
           "id": "eq3KyFixtgUyvKUgExxuZa5jKruXz0HuG0-IeOwqCQg=",
           "createdAt": "2026-08-14T16:47:23+09:00",
@@ -7759,7 +7799,7 @@
       "tagLine": "NA3",
       "region": "na1",
       "rank": null,
-      "profileUpdatedAt": "2026-08-14T16:45:10+09:00",
+      "profileUpdatedAt": "2026-08-15T15:03:15+09:00",
       "topChampions": [
         {
           "name": "Ahri",
